@@ -120,7 +120,8 @@ at your option.
 
 <div align="center">
 
-> 🔮 **Vibe Coded with StenioSentinel AI**  
-> Developed through autonomous human-AI pair-programming governed by **StenioSentinel** (our Rust-based AI Governance Sentinel) with **Carlos Eduardo Rodrigues** ([@ceduardorodrig](https://github.com/ceduardorodrig)) for the **Mnemocine Homelab** & Linux Gaming Community.
+> 🔮 **Vibe Coded with StenioSentinel**
+>
+> Governed by **StenioSentinel** (our Rust-based AI Governance Sentinel) with **Carlos Eduardo Rodrigues** ([@ceduardorodrig](https://github.com/ceduardorodrig)).
 
 </div>
