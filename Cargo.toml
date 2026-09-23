@@ -1,0 +1,7 @@
+[package]
+name = "with-smooth-motion"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+signal-hook = "0.4.4"
