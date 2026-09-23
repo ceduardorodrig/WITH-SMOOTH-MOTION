@@ -4,7 +4,6 @@
 [![License](https://img.shields.io/badge/license-MIT%20%7C%20Apache--2.0-blue)](LICENSE-MIT)
 [![Rust](https://img.shields.io/badge/rust-2024%20edition-informational)](https://www.rust-lang.org/)
 [![Wayland](https://img.shields.io/badge/wayland-Hyprland-blueviolet)](https://hyprland.org)
-[![Vibe Coded](https://img.shields.io/badge/vibe-coded-8A2BE2)](https://github.com/ceduardorodrig)
 
 An adaptive, lightweight Wayland direct scanout manager and process wrapper written in pure Rust for running games with **NVIDIA Smooth Motion** (`NVPRESENT_ENABLE_SMOOTH_MOTION=1` via `VK_LAYER_NV_present`).
 
@@ -121,7 +120,7 @@ at your option.
 
 <div align="center">
 
-> 🔮 **Vibe Coded with Antigravity AI**  
-> Developed through autonomous human-AI pair-programming by **Carlos Eduardo Rodrigues** ([@ceduardorodrig](https://github.com/ceduardorodrig)) for the **Mnemocine Homelab** & Linux Gaming Community.
+> 🔮 **Vibe Coded with StenioSentinel AI**  
+> Developed through autonomous human-AI pair-programming governed by **StenioSentinel** (our Rust-based AI Governance Sentinel) with **Carlos Eduardo Rodrigues** ([@ceduardorodrig](https://github.com/ceduardorodrig)) for the **Mnemocine Homelab** & Linux Gaming Community.
 
 </div>
