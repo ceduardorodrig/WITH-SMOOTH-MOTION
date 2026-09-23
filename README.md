@@ -1,6 +1,6 @@
-# with-smooth-motion
+# WITH-SMOOTH-MOTION
 
-[![Crates.io](https://img.shields.io/badge/crates.io-v0.1.0-orange)](https://github.com/ceduardorodrig/with-smooth-motion)
+[![Crates.io](https://img.shields.io/badge/crates.io-v0.1.0-orange)](https://github.com/ceduardorodrig/WITH-SMOOTH-MOTION)
 [![License](https://img.shields.io/badge/license-MIT%20%7C%20Apache--2.0-blue)](LICENSE-MIT)
 [![Rust](https://img.shields.io/badge/rust-2024%20edition-informational)](https://www.rust-lang.org/)
 [![Wayland](https://img.shields.io/badge/wayland-Hyprland-blueviolet)](https://hyprland.org)
@@ -53,8 +53,8 @@ flowchart TD
 Requires a standard Rust toolchain (MSRV: Rust 1.85+ / 2024 edition):
 
 ```bash
-git clone https://github.com/ceduardorodrig/with-smooth-motion.git
-cd with-smooth-motion
+git clone https://github.com/ceduardorodrig/WITH-SMOOTH-MOTION.git
+cd WITH-SMOOTH-MOTION
 cargo build --release
 sudo cp target/release/with-smooth-motion /usr/local/bin/with-smooth-motion
 sudo chmod 755 /usr/local/bin/with-smooth-motion

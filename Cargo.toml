@@ -6,8 +6,8 @@ authors = ["Carlos Eduardo Rodrigues <ceduardorodrig@gmail.com>"]
 description = "Adaptive Wayland direct scanout manager for NVIDIA Smooth Motion (VK_LAYER_NV_present)"
 readme = "README.md"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/ceduardorodrig/with-smooth-motion"
-homepage = "https://github.com/ceduardorodrig/with-smooth-motion"
+repository = "https://github.com/ceduardorodrig/WITH-SMOOTH-MOTION"
+homepage = "https://github.com/ceduardorodrig/WITH-SMOOTH-MOTION"
 keywords = ["nvidia", "smooth-motion", "wayland", "hyprland", "gaming"]
 categories = ["command-line-utilities", "game-development"]
 
