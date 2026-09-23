@@ -2,6 +2,14 @@
 name = "with-smooth-motion"
 version = "0.1.0"
 edition = "2024"
+authors = ["Carlos Eduardo Rodrigues <ceduardorodrig@gmail.com>"]
+description = "Adaptive Wayland direct scanout manager for NVIDIA Smooth Motion (VK_LAYER_NV_present)"
+readme = "README.md"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/ceduardorodrig/with-smooth-motion"
+homepage = "https://github.com/ceduardorodrig/with-smooth-motion"
+keywords = ["nvidia", "smooth-motion", "wayland", "hyprland", "gaming"]
+categories = ["command-line-utilities", "game-development"]
 
 [dependencies]
 signal-hook = "0.4.4"
