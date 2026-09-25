@@ -4,21 +4,23 @@ tags: [meta, agents, governance, linux, wayland]
 
 # AGENTS.md — WITH-SMOOTH-MOTION Governance Rules
 
-Este repositório contém a ferramenta **WITH-SMOOTH-MOTION**, um gerenciador adaptativo de direct scanout e tearing para Wayland (Hyprland / Valve games) escrito em Rust nativo.
+This repository contains **WITH-SMOOTH-MOTION**, an adaptive direct scanout and tearing governor for Wayland (Hyprland / Valve games) written in pure Rust.
 
-Ao modificar qualquer arquivo deste repositório, siga estas regras obrigatórias de governança:
+When modifying any file in this repository, follow these mandatory governance rules:
 
-## 🦀 Padrões Rust & Integridade
+**Language Tier:** A (Public OSS) — see [language-policy.md](file:///mnt/NVME_PCI/agentic-ai/governance/language-policy.md). All logs, CLI strings, documentation, and comments MUST be in English.
 
-1. **RUST NATIVO & SOBERANIA (RUST 2024)** — Todo código deve permanecer em Rust compilado nativo (`edition = "2024"`). Proibido scripts intermediários.
+## 🦀 Rust Standards & Integrity
 
-2. **PROIBIÇÃO DE UNWRAP/EXPECT EM PRODUÇÃO (`RUST-NO-UNWRAP`)** — Tratamento de erros deve ser determinístico usando `?`, `match` ou fallback seguro (`unwrap_or`).
+1. **NATIVE RUST & SOVEREIGNTY (RUST 2024)** — All code must remain in native compiled Rust (`edition = "2024"`). Intermediate scripts are strictly prohibited (`ARCH-NO-PYTHON`).
 
-3. **VERIFICAÇÃO OBRIGATÓRIA DO STÊNIOSENTINEL (REGRA 0)** — Antes de qualquer commit, é obrigatório executar `stenio --path .`. O Quality Gate deve aprovar com zero erros bloqueantes.
+2. **PROHIBITION OF UNWRAP/EXPECT IN PRODUCTION (`RUST-NO-UNWRAP`)** — Error handling must be deterministic using `?`, `match`, or safe fallbacks (`unwrap_or`). Using `unwrap()` or `expect()` in production triggers panics and is classified as a bypass attempt.
 
-4. **SEGURANÇA & ZERO SEGREDOS (`SEC-SECRETS`)** — Nenhuma credencial ou token deve ser adicionado ao código.
+3. **MANDATORY STENIOSENTINEL VERIFICATION (RULE 0)** — Before completing any turn or committing, execute `stenio --path .`. The Quality Gate must pass with zero blocking errors.
 
-5. **DISCLAIMER PADRONIZADO NO README** — O `README.md` raiz deve manter o disclaimer padronizado de governança humana-IA:
+4. **ZERO CREDENTIALS & SECRETS (`SEC-SECRETS`)** — Never commit credentials, tokens, or private secrets.
+
+5. **STANDARDIZED README DISCLAIMER** — The root `README.md` must preserve the standardized vibe-coded governance disclaimer:
    ```markdown
    <div align="center">
 

@@ -96,14 +96,14 @@ WINEDLLOVERRIDES="winhttp,version=n,b" PROTON_ENABLE_WAYLAND=1 systemd-run --use
 `with-smooth-motion` outputs real-time timestamped events to `/tmp/with-smooth-motion.log`:
 
 ```text
-[1790145900] Iniciando comando com Smooth Motion: [...]
-[1790145900] render:direct_scanout ajustado para 0
-[1790145900] Processo filho iniciado com PID 318079
-[1790146860] Watchdog detectou scanout revertido para 2. Reaplicando 0...
-[1790146860] render:direct_scanout ajustado para 0
-[1790147012] Processo filho finalizado com status: ExitStatus(0)
-[1790147012] render:direct_scanout ajustado para 2
-[1790147012] ScanoutGuard drop: scanout restaurado para 2
+[1790145900] Starting command with Smooth Motion: [...]
+[1790145900] render:direct_scanout set to 0
+[1790145900] Child process started with PID 318079
+[1790146860] Watchdog detected scanout reverted to 2. Re-applying 0...
+[1790146860] render:direct_scanout set to 0
+[1790147012] Child process finished with status: ExitStatus(0)
+[1790147012] render:direct_scanout set to 2
+[1790147012] ScanoutGuard drop: scanout restored to 2
 ```
 
 ---

@@ -52,7 +52,7 @@ fn set_direct_scanout(val: u8) {
         let _ = Command::new("hyprctl")
             .args(["eval", &code])
             .output();
-        log_msg(&format!("render:direct_scanout ajustado para {}", val));
+        log_msg(&format!("render:direct_scanout set to {}", val));
     }
 }
 
@@ -61,27 +61,27 @@ struct ScanoutGuard;
 impl Drop for ScanoutGuard {
     fn drop(&mut self) {
         set_direct_scanout(2);
-        log_msg("ScanoutGuard drop: scanout restaurado para 2");
+        log_msg("ScanoutGuard drop: scanout restored to 2");
     }
 }
 
 fn main() {
     let args: Vec<String> = env::args().skip(1).collect();
     if args.is_empty() {
-        eprintln!("Uso: with-smooth-motion <comando> [argumentos...]");
+        eprintln!("Usage: with-smooth-motion <command> [args...]");
         process::exit(1);
     }
 
-    log_msg(&format!("Iniciando comando com Smooth Motion: {:?}", args));
+    log_msg(&format!("Starting command with Smooth Motion: {:?}", args));
 
-    // 1. Força desativação inicial de direct scanout
+    // 1. Force initial deactivation of direct scanout
     set_direct_scanout(0);
     let _guard = ScanoutGuard;
 
     let is_running = Arc::new(AtomicBool::new(true));
     let running_watchdog = Arc::clone(&is_running);
 
-    // 2. Watchdog: monitora a cada 2s se direct_scanout foi resetado por troca de workspace/reload do Hyprland
+    // 2. Watchdog: monitors every 2s whether direct_scanout was reset by workspace switch or Hyprland reload
     thread::spawn(move || {
         while running_watchdog.load(Ordering::Relaxed) {
             thread::sleep(Duration::from_secs(2));
@@ -90,14 +90,14 @@ fn main() {
             }
             if let Some(val) = get_direct_scanout() {
                 if val != 0 {
-                    log_msg(&format!("Watchdog detectou scanout revertido para {}. Reaplicando 0...", val));
+                    log_msg(&format!("Watchdog detected scanout reverted to {}. Re-applying 0...", val));
                     set_direct_scanout(0);
                 }
             }
         }
     });
 
-    // 3. Spawna o processo filho com Smooth Motion ativo
+    // 3. Spawn child process with Smooth Motion enabled
     let program = &args[0];
     let program_args = &args[1..];
 
@@ -108,24 +108,24 @@ fn main() {
     {
         Ok(c) => c,
         Err(e) => {
-            log_msg(&format!("Erro ao iniciar '{}': {}", program, e));
-            eprintln!("Erro ao executar '{}': {}", program, e);
+            log_msg(&format!("Failed to spawn '{}': {}", program, e));
+            eprintln!("Failed to execute '{}': {}", program, e);
             drop(_guard);
             process::exit(127);
         }
     };
 
     let child_pid = child.id();
-    log_msg(&format!("Processo filho iniciado com PID {}", child_pid));
+    log_msg(&format!("Child process started with PID {}", child_pid));
 
-    // 4. Captura sinais graciosos e repassa ao filho
+    // 4. Capture graceful signals and forward them to child
     let running_signals = Arc::clone(&is_running);
     if let Ok(mut signals) = Signals::new([SIGINT, SIGTERM]) {
         thread::spawn(move || {
             if let Some(sig) = signals.into_iter().next() {
-                log_msg(&format!("Recebido sinal {}. Encerrando processo filho PID {}...", sig, child_pid));
+                log_msg(&format!("Received signal {}. Terminating child process PID {}...", sig, child_pid));
                 running_signals.store(false, Ordering::SeqCst);
-                // Envia SIGTERM para o filho via kill
+                // Send SIGTERM to child via kill
                 let _ = Command::new("kill")
                     .args(["-15", &child_pid.to_string()])
                     .output();
@@ -133,13 +133,13 @@ fn main() {
         });
     }
 
-    // 5. Aguarda conclusão do processo filho
+    // 5. Wait for child process to complete
     let status_res = child.wait();
     is_running.store(false, Ordering::SeqCst);
 
     match status_res {
         Ok(status) => {
-            log_msg(&format!("Processo filho finalizado com status: {:?}", status));
+            log_msg(&format!("Child process finished with status: {:?}", status));
             drop(_guard);
             if let Some(code) = status.code() {
                 process::exit(code);
@@ -148,7 +148,7 @@ fn main() {
             }
         }
         Err(e) => {
-            log_msg(&format!("Erro ao aguardar processo filho: {}", e));
+            log_msg(&format!("Failed to wait for child process: {}", e));
             drop(_guard);
             process::exit(1);
         }
