@@ -28,19 +28,22 @@ When running Linux gaming setups on Wayland compositors (such as **Hyprland**) p
 
 ```mermaid
 flowchart TD
-    A[Launch Game via with-smooth-motion] --> B[1. Sets hl.config render.direct_scanout = 0]
-    B --> C[2. Spawns Child with NVPRESENT_ENABLE_SMOOTH_MOTION=1]
-    C --> D[3. Background Watchdog: checks every 2s]
-    D -->|Workspace switch or Alt+Tab resets scanout| E[Auto-reapplies direct_scanout = 0]
-    C --> F[Game Running: 100% Fluid Frame Generation]
-    F --> G[Game Exits / Signal Received]
-    G --> H[4. RAII ScanoutGuard: restores render.direct_scanout = 2]
+    A[Launch Game via with-smooth-motion] --> B[1. Records user default scanout & creates /tmp/with-smooth-motion.active]
+    B --> C[2. Sets hl.config render.direct_scanout = 0]
+    C --> D[3. Spawns Child with NVPRESENT_ENABLE_SMOOTH_MOTION=1]
+    D --> E[4. Background Watchdog: checks every 2s]
+    E -->|Workspace switch or external reload alters scanout| F[Auto-reapplies direct_scanout = 0]
+    D --> G[Game Running: 100% Fluid Frame Generation]
+    G --> H[Game Exits / Signal Received / Panic]
+    H --> I[5. RAII ScanoutGuard: removes active flag & restores user default scanout]
 ```
 
-- **Transparent Composition:** Sets `hl.config({ render = { direct_scanout = 0 } })` via Hyprland IPC only while the targeted game runs.
-- **Alt+Tab / Workspace Switch Immune:** Includes an asynchronous watchdog thread checking compositor state every 2 seconds. If a workspace switch or compositor event re-enables direct scanout, the watchdog re-applies `0` in under 2ms.
+- **Transparent Composition:** Sets `hl.config({ render = { direct_scanout = 0 } })` via Hyprland IPC while the targeted game runs.
+- **Dynamic State Coordination:** Creates `/tmp/with-smooth-motion.active` with PID tracking. Allows compositor configs (such as `misc.lua`) to inspect session state so background events (e.g. wallpaper engine rotations or theme syncs) do not revert scanout mid-match.
+- **Restores User Custom Default:** Reads and stores the user's pre-launch `render.direct_scanout` setting at startup, ensuring that whatever custom value you had beforehand is faithfully restored upon game exit.
+- **Dead-Man Switch & Anti-Zombie Guarantee:** Implements full RAII cleanup, a custom panic hook, and signal interception (`SIGINT`, `SIGTERM`, `SIGHUP`). In the event of unexpected termination, `/proc/<pid>` liveness validation prevents stale lockfile persistence.
+- **Dual-Layer Redundant Watchdog:** An asynchronous watchdog thread polls compositor state every 2 seconds as a secondary line of defense, ensuring instantaneous re-application if external interventions occur.
 - **Zero Overhead:** Native Wayland presentation via Proton (`winewayland.drv`) with no nested micro-compositors.
-- **Guaranteed Cleanup (RAII):** Rust's `Drop` implementation ensures that whether the game exits cleanly, crashes, or is terminated by `SIGINT`/`SIGTERM`, `render.direct_scanout = 2` is immediately restored for all other games.
 - **Compositor Agnostic Fallback:** If launched outside Hyprland (e.g. KDE Plasma or Sway), it sets the NVIDIA environment variables and launches without failing.
 
 ---

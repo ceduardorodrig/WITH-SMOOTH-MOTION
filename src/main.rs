@@ -6,7 +6,7 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 use std::thread;
 use std::time::{Duration, SystemTime};
-use signal_hook::consts::{SIGINT, SIGTERM};
+use signal_hook::consts::{SIGHUP, SIGINT, SIGTERM};
 use signal_hook::iterator::Signals;
 
 fn log_msg(msg: &str) {
@@ -73,13 +73,18 @@ fn clear_active() {
     let _ = std::fs::remove_file(ACTIVE_FILE);
 }
 
-struct ScanoutGuard;
+struct ScanoutGuard {
+    original_scanout: u8,
+}
 
 impl Drop for ScanoutGuard {
     fn drop(&mut self) {
         clear_active();
-        set_direct_scanout(2);
-        log_msg("ScanoutGuard drop: scanout restored to 2 and active indicator removed");
+        set_direct_scanout(self.original_scanout);
+        log_msg(&format!(
+            "ScanoutGuard drop: scanout restored to user default ({}) and active indicator removed",
+            self.original_scanout
+        ));
     }
 }
 
@@ -90,12 +95,28 @@ fn main() {
         process::exit(1);
     }
 
-    log_msg(&format!("Starting command with Smooth Motion: {:?}", args));
+    let original_scanout = get_direct_scanout().unwrap_or(2);
+    log_msg(&format!(
+        "Starting command with Smooth Motion: {:?} (user default scanout: {})",
+        args, original_scanout
+    ));
+
+    // Install panic hook to ensure active indicator is cleaned up and original scanout restored
+    let default_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(move |panic_info| {
+        clear_active();
+        set_direct_scanout(original_scanout);
+        log_msg(&format!(
+            "Panic caught: restored scanout to user default ({}) and removed active indicator",
+            original_scanout
+        ));
+        default_hook(panic_info);
+    }));
 
     // 1. Mark session as active and force initial deactivation of direct scanout
     mark_active(process::id());
     set_direct_scanout(0);
-    let _guard = ScanoutGuard;
+    let _guard = ScanoutGuard { original_scanout };
 
     let is_running = Arc::new(AtomicBool::new(true));
     let running_watchdog = Arc::clone(&is_running);
@@ -140,7 +161,7 @@ fn main() {
 
     // 4. Capture graceful signals and forward them to child
     let running_signals = Arc::clone(&is_running);
-    if let Ok(mut signals) = Signals::new([SIGINT, SIGTERM]) {
+    if let Ok(mut signals) = Signals::new([SIGINT, SIGTERM, SIGHUP]) {
         thread::spawn(move || {
             if let Some(sig) = signals.into_iter().next() {
                 log_msg(&format!("Received signal {}. Terminating child process PID {}...", sig, child_pid));
