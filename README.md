@@ -1,6 +1,6 @@
 # WITH-SMOOTH-MOTION
 
-[![Crates.io](https://img.shields.io/badge/crates.io-v0.1.0-orange)](https://github.com/ceduardorodrig/WITH-SMOOTH-MOTION)
+[![Crates.io](https://img.shields.io/badge/crates.io-v0.2.0-orange)](https://github.com/ceduardorodrig/WITH-SMOOTH-MOTION)
 [![License](https://img.shields.io/badge/license-MIT%20%7C%20Apache--2.0-blue)](LICENSE-MIT)
 [![Rust](https://img.shields.io/badge/rust-2024%20edition-informational)](https://www.rust-lang.org/)
 [![Wayland](https://img.shields.io/badge/wayland-Hyprland-blueviolet)](https://hyprland.org)

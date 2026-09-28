@@ -58,16 +58,19 @@ fn set_direct_scanout(val: u8) {
 
 const ACTIVE_FILE: &str = "/tmp/with-smooth-motion.active";
 
-fn mark_active(pid: u32) {
+fn mark_active(pids: &[u32]) {
     if let Ok(mut file) = OpenOptions::new()
         .create(true)
         .write(true)
         .truncate(true)
         .open(ACTIVE_FILE)
     {
-        let _ = writeln!(file, "{}", pid);
+        for pid in pids {
+            let _ = writeln!(file, "{}", pid);
+        }
     }
 }
+
 
 fn clear_active() {
     let _ = std::fs::remove_file(ACTIVE_FILE);
@@ -113,8 +116,8 @@ fn main() {
         default_hook(panic_info);
     }));
 
-    // 1. Mark session as active and force initial deactivation of direct scanout
-    mark_active(process::id());
+    let my_pid = process::id();
+    mark_active(&[my_pid]);
     set_direct_scanout(0);
     let _guard = ScanoutGuard { original_scanout };
 
@@ -156,7 +159,7 @@ fn main() {
     };
 
     let child_pid = child.id();
-    mark_active(child_pid);
+    mark_active(&[my_pid, child_pid]);
     log_msg(&format!("Child process started with PID {}", child_pid));
 
     // 4. Capture graceful signals and forward them to child

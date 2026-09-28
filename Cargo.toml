@@ -1,6 +1,6 @@
 [package]
 name = "with-smooth-motion"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 authors = ["Carlos Eduardo Rodrigues <ceduardorodrig@gmail.com>"]
 description = "Adaptive Wayland direct scanout manager for NVIDIA Smooth Motion (VK_LAYER_NV_present)"
