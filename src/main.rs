@@ -56,12 +56,30 @@ fn set_direct_scanout(val: u8) {
     }
 }
 
+const ACTIVE_FILE: &str = "/tmp/with-smooth-motion.active";
+
+fn mark_active(pid: u32) {
+    if let Ok(mut file) = OpenOptions::new()
+        .create(true)
+        .write(true)
+        .truncate(true)
+        .open(ACTIVE_FILE)
+    {
+        let _ = writeln!(file, "{}", pid);
+    }
+}
+
+fn clear_active() {
+    let _ = std::fs::remove_file(ACTIVE_FILE);
+}
+
 struct ScanoutGuard;
 
 impl Drop for ScanoutGuard {
     fn drop(&mut self) {
+        clear_active();
         set_direct_scanout(2);
-        log_msg("ScanoutGuard drop: scanout restored to 2");
+        log_msg("ScanoutGuard drop: scanout restored to 2 and active indicator removed");
     }
 }
 
@@ -74,7 +92,8 @@ fn main() {
 
     log_msg(&format!("Starting command with Smooth Motion: {:?}", args));
 
-    // 1. Force initial deactivation of direct scanout
+    // 1. Mark session as active and force initial deactivation of direct scanout
+    mark_active(process::id());
     set_direct_scanout(0);
     let _guard = ScanoutGuard;
 
@@ -116,6 +135,7 @@ fn main() {
     };
 
     let child_pid = child.id();
+    mark_active(child_pid);
     log_msg(&format!("Child process started with PID {}", child_pid));
 
     // 4. Capture graceful signals and forward them to child
