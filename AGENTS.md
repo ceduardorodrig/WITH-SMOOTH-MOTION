@@ -20,13 +20,17 @@ When modifying any file in this repository, follow these mandatory governance ru
 
 4. **ZERO CREDENTIALS & SECRETS (`SEC-SECRETS`)** — Never commit credentials, tokens, or private secrets.
 
-5. **STANDARDIZED README DISCLAIMER** — The root `README.md` must preserve the standardized vibe-coded governance disclaimer:
+5. **STANDARDIZED README DISCLAIMER** — The root `README.md` must preserve the standardized governance disclaimer:
    ```markdown
    <div align="center">
 
-   > **Yes... This is a Vibe Coded project**
+   ### 🛡️ Human-in-the-Loop Agentic Engineering & Deterministic Governance
+
+   > **Architected by an Anthropologist, Built with Autonomous AI Agents, Governed by Deterministic Code.**
+   > 
+   > This project was developed through rigorous human-AI pair programming led by **Carlos Eduardo Rodrigues** ([@ceduardorodrig](https://github.com/ceduardorodrig)) — an anthropologist and product architect using autonomous coding agents under strict, sub-millisecond static governance.
    >
-   > Governed by 🤖 **StenioSentinel** (our Rust-based AI Governance Sentinel) with **Carlos Eduardo Rodrigues** ([@ceduardorodrig](https://github.com/ceduardorodrig)).
+   > Every commit, driver, and system architecture is continuously audited and enforced by 🤖 **[StenioSentinel](https://github.com/ceduardorodrig/STENIO-SENTINEL)** (our native Rust quality gate) with zero tolerance for hallucinated tests, blind merges, or bypassed checks.
 
    </div>
    ```
