@@ -1,7 +1,7 @@
 # WITH-SMOOTH-MOTION
 
 [![Crates.io](https://img.shields.io/badge/crates.io-v0.2.0-orange)](https://github.com/ceduardorodrig/WITH-SMOOTH-MOTION)
-[![License](https://img.shields.io/badge/license-MIT%20%7C%20Apache--2.0-blue)](LICENSE-MIT)
+[![License](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE)
 [![Rust](https://img.shields.io/badge/rust-2024%20edition-informational)](https://www.rust-lang.org/)
 [![Wayland](https://img.shields.io/badge/wayland-Hyprland-blueviolet)](https://hyprland.org)
 
@@ -113,11 +113,7 @@ WINEDLLOVERRIDES="winhttp,version=n,b" PROTON_ENABLE_WAYLAND=1 systemd-run --use
 
 ## 📄 License
 
-Dual-licensed under either:
-- **MIT License** ([LICENSE-MIT](LICENSE-MIT))
-- **Apache License, Version 2.0** ([LICENSE-APACHE](LICENSE-APACHE))
-
-at your option.
+This project is licensed under the [GNU General Public License v3.0 (GPL-3.0)](LICENSE).
 
 ---
 
