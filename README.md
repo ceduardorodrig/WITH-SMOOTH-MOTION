@@ -7,11 +7,6 @@
 
 An adaptive, lightweight Wayland direct scanout manager and process wrapper written in pure Rust for running games with **NVIDIA Smooth Motion** (`NVPRESENT_ENABLE_SMOOTH_MOTION=1` via `VK_LAYER_NV_present`).
 
-🛡️ Human-in-the-Loop Agentic Engineering
-
-Developed by Carlos Eduardo Rodrigues with AI coding agents.
-Every change is verified by the deterministic quality gate StenioSentinel.
-
 ---
 
 ## 🎯 The Problem
@@ -119,3 +114,10 @@ WINEDLLOVERRIDES="winhttp,version=n,b" PROTON_ENABLE_WAYLAND=1 systemd-run --use
 ## 📄 License
 
 This project is licensed under the [GNU General Public License v3.0 (GPL-3.0)](LICENSE).
+
+---
+
+🛡️ Human-in-the-Loop Agentic Engineering
+
+Developed by Carlos Eduardo Rodrigues with AI coding agents.
+Every change is verified by the deterministic quality gate StenioSentinel.
