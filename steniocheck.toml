@@ -1,7 +1,7 @@
 # ══════════════════════════════════════════════════════════════════════════════
-# StênioSentinel — Regras Customizadas
-# Política de idioma: /mnt/NVME_PCI/agentic-ai/governance/language-policy.md
-# Tier de idioma: A (OSS público) —Strings de log e CLI sempre em inglês.
+# StenioSentinel — custom rules
+# Language policy: /mnt/NVME_PCI/agentic-ai/governance/language-policy.md
+# Language tier: A (public OSS) — log and CLI strings always in English.
 # ══════════════════════════════════════════════════════════════════════════════
 
 [[custom_rules]]

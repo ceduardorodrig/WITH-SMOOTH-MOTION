@@ -1,0 +1,33 @@
+name: rust-check
+
+# Compiles the crate so that dependency PRs (Dependabot cargo) are actually built.
+# Edition 2024 needs Rust >= 1.85, so the stable channel is used.
+# Single crate, single Cargo.lock at the root (mirrors dependabot.yml directory "/").
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  cargo-check:
+    name: cargo check (--locked, all targets)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: dtolnay/rust-toolchain@39008827e6b4319a349e9a42dfc90579dd25f1ca # stable
+        with:
+          toolchain: stable
+
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
+
+      - name: cargo check
+        run: cargo check --locked --all-targets
